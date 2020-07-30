@@ -6,6 +6,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+      String radioItem = '';
 
   String value='';
   String dropDownValue='Pick Category';
@@ -67,20 +68,14 @@ class _SearchPageState extends State<SearchPage> {
         padding: const EdgeInsets.all(12.0),
         child: Text('Type of announcement',style: TextStyle(),),
       ),
-      Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                       Radio(
-                        value: 0, groupValue: null, onChanged: (int v) {  },
-                      ),
-                      Text('Vente',  style:  TextStyle(fontSize: 16.0),),
-                     Radio(
-                        value: 1, groupValue: null, onChanged: (int value) {  },),
-                       Text('Demande', style:  TextStyle( fontSize: 16.0,),
-                      ),
-                     
-                    ],
-                  ),
+     
+                       Row(mainAxisAlignment: MainAxisAlignment.center,
+                         children: <Widget>[
+                           Expanded(child: radioTile('bulsjit')),
+                            Expanded(child: radioTile('vente')),
+                         ],
+                       ),
+                 
       Padding(
         padding: const EdgeInsets.all(12.0),
         child: Text('Price',style: TextStyle(),),
@@ -109,6 +104,20 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
     );
+  }
+
+   Widget radioTile(String value){
+return RadioListTile(
+  activeColor: Colors.blue,
+              groupValue: radioItem,
+              title: Text(value),
+              value: value,
+              onChanged: (val) {
+                setState(() {
+                  radioItem = val;
+                });
+              },
+            );
   }
   Widget priceTextField(String hintText){
     return Container(

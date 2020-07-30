@@ -167,7 +167,7 @@ isNotGrid ?
                     children: <Widget>[
                     //
                     Container(
-                    width: MediaQuery.of(context).size.width*0.325,
+                    width: MediaQuery.of(context).size.width*0.329,
                            decoration: BoxDecoration(
                                       borderRadius: BorderRadius.only(topLeft:Radius.circular(12),
                                       bottomLeft:Radius.circular(12),),

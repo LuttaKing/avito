@@ -24,6 +24,9 @@ class _SelectCategoryState extends State<SelectCategory> {
     'Clothing Wellbeing','For Children','Clothing','Bags','Beauty','Equipment for babies','Shoes','Watches and Jewels',
     'Leisure','Sports and Leisure','Animals','Movies Books Magazines','Travel and Tickets','Art','Musical Instruments',
     'Companies','Professional Equipment','Business and Commercial','Stock and Wholesale'];
+
+      String radioItem = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,19 +61,11 @@ Padding(
 ),
 
  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                       Radio(
-                        value: 0, groupValue: null, onChanged: (int v) {  },
-                      ),
-                      Text('Vente',  style:  TextStyle(fontSize: 16.0),),
-                     Radio(
-                        value: 1, groupValue: null, onChanged: (int value) {  },),
-                       Text('Demande', style:  TextStyle( fontSize: 16.0,),
-                      ),
-                     
-                    ],
-                  ),
+                         children: <Widget>[
+                           Expanded(child: radioTile('bulsjit')),
+                            Expanded(child: radioTile('vente')),
+                         ],
+                       ),
                  
 
        
@@ -79,6 +74,19 @@ Padding(
       ),),
       
     );
+  }
+
+  Widget radioTile(String value){
+return RadioListTile(
+              groupValue: radioItem,
+              title: Text(value),
+              value: value,
+              onChanged: (val) {
+                setState(() {
+                  radioItem = val;
+                });
+              },
+            );
   }
 
   Widget _bottomButton(){
@@ -119,7 +127,10 @@ Padding(
                           Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
                         ],
                       ),
-                         hint:Text(pickedCategory),
+                         hint:Padding(
+                           padding: const EdgeInsets.only(left:8.0),
+                           child: Text(pickedCategory),
+                         ),
             items: _categoryAndSubcategories.map((String pickVal) {
              
                   return  DropdownMenuItem(
@@ -128,7 +139,7 @@ Padding(
                     Column(
                       children: <Widget>[
                         Text(pickVal.toUpperCase(),style: TextStyle(color: Colors.grey[600],fontFamily: 'Ptsans',fontSize: 15),),
-                        Divider(color: Colors.orange,),
+                        Divider(color: Colors.orange[900],),
                       ],
                     )
                     :Text(pickVal,style: TextStyle(fontFamily: 'Ptsans',fontSize: 15)),
