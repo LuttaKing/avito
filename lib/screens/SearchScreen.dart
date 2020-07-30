@@ -1,3 +1,4 @@
+import 'package:avito/screens/NavPage.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
@@ -10,14 +11,13 @@ class _SearchPageState extends State<SearchPage> {
 
   String value='';
   String dropDownValue='Pick Category';
-  List<String> _category=['Computer and Multimedia','Vehicle','Immovable','Home and Garden','Real Estate','Employment and Dervices','Clothing Wellbieng','Leisure','Companies'];
-    List<String> _categoryAndSubcategories=['Computer and Multimedia','Phones','Image and Sound','Laptop','Video games','Desktops','Computer Accesories','Camera','Tablet','Television',
-
+  List<String> _category=['Computer and Multimedia','Vehicle','Immovable','Home and Garden','Employment and Services','Clothing Wellbeing','Leisure','Companies'];
+    List<String> _categoryAndSubcategories=[
+      'Computer and Multimedia','Phones','Image and Sound','Laptop','Video games','Desktops','Computer Accesories','Camera','Tablet','Television',
     'Vehicle','Cars','Motorcycles','Vehicle Parts','Boats','Bikes','Proffesional Vehicles',
     'Immovable','ApartMents','Houses and Villas','Holiday Rents','Offices','Stores and Business','Land and Farms','Roomates',
     'Home and Garden','Appliances and Tableware','Furniture and Decoration','Garden and tools',
-
-    'Employment and Services','Jobs','Job Applications','Services','Courses and Training','Call Center','HouseKeepers and Drivers','House Work','Frames','Internship'
+    'Employment and Services','Jobs','Job Applications','Services','Courses and Training','Call Center','HouseKeepers and Drivers','House Work','Frames','Internship',
     'Clothing Wellbeing','For Children','Clothing','Bags','Beauty','Equipment for babies','Shoes','Watches and Jewels',
     'Leisure','Sports and Leisure','Animals','Movies Books Magazines','Travel and Tickets','Art','Musical Instruments',
     'Companies','Professional Equipment','Business and Commercial','Stock and Wholesale'];
@@ -49,6 +49,12 @@ class _SearchPageState extends State<SearchPage> {
               ),
           ),
       ),
+        bottomNavigationBar: BottomAppBar(
+    color: Colors.white,
+  
+    child: _bottomButton(),
+    elevation: 0,
+  ),
       body: Container(color: Colors.grey[200],
              
           child: Center(
@@ -64,6 +70,7 @@ class _SearchPageState extends State<SearchPage> {
         child: Text('Location',style: TextStyle(),),
       ),
         dropDownButton(),
+     
       Padding(
         padding: const EdgeInsets.all(12.0),
         child: Text('Type of announcement',style: TextStyle(),),
@@ -87,18 +94,7 @@ class _SearchPageState extends State<SearchPage> {
                   priceTextField('Max'),
 
       ],),
-       Spacer(),
- Center(child:  Padding(
-   padding: const EdgeInsets.only(top:28.0),
-   child: Container(decoration: BoxDecoration(
-                 color: Color(0xffb078080),
-                    borderRadius: BorderRadius.all(
-          Radius.circular(5.0) //      
-    ),
-  ),child: SizedBox(width: 290,height: 50,
-  child: FlatButton(onPressed: null,
-  child: Text('Search',style: TextStyle(fontFamily: 'New',color: Colors.white),),),)),
- ))
+      
 
                 ],),
           ),
@@ -162,24 +158,22 @@ return RadioListTile(
                       ),
                              hint:Text(dropDownValue),
             items: _categoryAndSubcategories.map((String pickVal) {
-             
+              
                       return  DropdownMenuItem<String>(
                         value: pickVal,
                         child:  _category.contains(pickVal) ? 
-                    Column(
+                    Row(mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Row(mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                           
-                            Icon(Icons.keyboard_arrow_right,size: 20,color: Colors.orange,),
-                            Text(pickVal.toUpperCase(),style: TextStyle(color: Colors.grey[600],fontFamily: 'Ptsans',fontSize: 15),),
-                          ],
-                        ),
-                        Divider(color: Colors.orange[800],),
+                       
+                       
+                        Container(color: Colors.orange,child: Padding(
+                          padding: const EdgeInsets.only(top:2.0,bottom: 2.0,left: 22,right: 22),
+                          child: Text(pickVal.toUpperCase(),style: TextStyle(color: Colors.white,fontFamily: 'Fred',fontSize: 15),),
+                        )),
                       ],
                     )
-                    :Text(pickVal,style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),
-                      );
+                    :Text(pickVal,
+                    style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
             }).toList(),
             onChanged: (val) {
                       setState(() {
@@ -192,5 +186,26 @@ return RadioListTile(
                   ),
                 ),
               );
+  }
+  Widget _bottomButton(){
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: SizedBox(
+                  height:MediaQuery.of(context).size.height*0.07,
+                width: MediaQuery.of(context).size.width*0.6,
+                child: FlatButton(
+                  color: Colors.blue[700],child: Text('SEARCH',
+                  style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
+                  onPressed: (){
+                Navigator.pop(context);
+            Navigator.push(
+              context,
+               MaterialPageRoute(
+               builder: (context) => NavPage(),
+               ));
+          
+ 
+                },),),
+    );
   }
 }

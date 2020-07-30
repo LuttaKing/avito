@@ -11,6 +11,8 @@ class _RegisterPageState extends State<RegisterPage> {
 String dropDownValue='Pick location';
   String email='';
   String password='';
+        String radioItem = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,20 +120,12 @@ String dropDownValue='Pick location';
         padding: const EdgeInsets.all(12.0),
         child: Text('Type of announcement',style: TextStyle(),),
       ),
-      Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                       Radio(
-                        value: 0, groupValue: null, onChanged: (int v) {  },
-                      ),
-                      Text('Vente',  style:  TextStyle(fontSize: 16.0),),
-                     Radio(
-                        value: 1, groupValue: null, onChanged: (int value) {  },),
-                       Text('Demande', style:  TextStyle( fontSize: 16.0,),
-                      ),
-                     
-                    ],
-                  ),
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+                         children: <Widget>[
+                           Expanded(child: radioTile('bulsjit')),
+                            Expanded(child: radioTile('vente')),
+                         ],
+                       ),
             ]),
           ),
              ),
@@ -198,5 +192,18 @@ String dropDownValue='Pick location';
                   ),
                 ),
               );
+  }
+  Widget radioTile(String value){
+return RadioListTile(
+  activeColor: Colors.blue,
+              groupValue: radioItem,
+              title: Text(value),
+              value: value,
+              onChanged: (val) {
+                setState(() {
+                  radioItem = val;
+                });
+              },
+            );
   }
 }

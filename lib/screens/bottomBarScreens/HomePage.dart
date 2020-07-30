@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
  super.initState();
+ setAuthtoFalse();
  readView();
   }
   bool isNotGrid=true;
@@ -310,6 +311,20 @@ Share.share('Hey, check out this item at https://example.com');
     prefs.setString('gridType', view);
     readView();
   }
+
+  setAuthtoFalse() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('Logged In', 'NO');
+   
+  }
+
+  setAuthtoTrue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('Logged In', 'YES');
+   
+  }
+
+  
 
  readView() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
