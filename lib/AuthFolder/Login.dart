@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
         Navigator.pop(context);
       },),),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[100],
       body: Center(child: Container(child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: SingleChildScrollView(

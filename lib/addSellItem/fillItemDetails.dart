@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:avito/screens/NavPage.dart';
 import 'package:flutter/material.dart';
 
 class ItemDetailForm extends StatefulWidget {
@@ -28,6 +29,12 @@ String pickedLocation='Pick a location';
         Navigator.pop(context);
       },),),
       backgroundColor: Colors.grey[200],
+       bottomNavigationBar: BottomAppBar(
+    color: Colors.white,
+  
+    child: _bottomButton(),
+    elevation: 0,
+  ),
       body: Center(child: Container(child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: ListView(children: <Widget>[
@@ -100,23 +107,7 @@ String pickedLocation='Pick a location';
              ),
        
 
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(color: Colors.blue[600],
-                                borderRadius: BorderRadius.all(Radius.circular(8)),),
-            child: SizedBox(
-                height:MediaQuery.of(context).size.height*0.06,
-            width: MediaQuery.of(context).size.width*0.75,
-            child: FlatButton(onPressed: (){
-              if(_formKey.currentState.validate()){
-                    print([title,pickedLocation,widget.category,widget.listOfImages,price]);
-              }
-            },
-            child: Text('CONTINUE',style: TextStyle(fontFamily: 'Ptsans',color: Colors.white),
-            ),),),
-          ),
-        ),
+       
 
           
           ],),
@@ -166,5 +157,24 @@ String pickedLocation='Pick a location';
                   ),
                 ),
               );
+  }
+   Widget _bottomButton(){
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: SizedBox(
+                  height:MediaQuery.of(context).size.height*0.07,
+                width: MediaQuery.of(context).size.width*0.6,
+                child: FlatButton(
+                  color: Colors.blue[600],child: Text('CONTINUE',
+                  style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
+                  onPressed: (){
+               if(_formKey.currentState.validate()){
+                    print([title,pickedLocation,widget.category,widget.listOfImages,price]);
+              }
+            // Navigator.push(
+            //   context,
+            //    MaterialPageRoute(builder: (context) => NavPage(),//    ));
+            },),),
+    );
   }
 }

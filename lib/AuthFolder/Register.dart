@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -16,10 +15,11 @@ String dropDownValue='Pick location';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true,title: Text('REGISTER',style: TextStyle(fontFamily: 'Ptsans',color: Colors.grey[600]),),backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
+      appBar: AppBar(centerTitle: true,title: Text('REGISTER',
+      style: TextStyle(fontFamily: 'Ptsans',color: Colors.grey[600]),),backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
         Navigator.pop(context);
       },),),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[100],
       body: Center(child: Container(child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: ListView(children: <Widget>[

@@ -72,7 +72,8 @@ class _NavPageState extends State<NavPage> {
  bottom: widget.pageIndex == 1 ?
         TabBar(
                 tabs: [
-                  Tab(icon: Icon(Icons.person_add,color: Colors.blue[600],)),
+                  Tab(icon: Icon(Icons.filter_list,
+                  color: Colors.blue[600],)),
                   Tab(icon: Icon(Icons.favorite_border,color: Colors.redAccent,)),
                   Tab(icon: Icon(Icons.star_border,color: Colors.yellow,)),
                 ],
