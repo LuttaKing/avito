@@ -1,5 +1,7 @@
 import 'dart:io';
-
+import 'package:avito/searchWidgets.dart';
+import 'package:avito/sellListProvider/AdItemListNotifier.dart';
+import 'package:provider/provider.dart';
 import 'package:avito/addSellItem/fillItemDetails.dart';
 import 'package:flutter/material.dart';
 
@@ -11,24 +13,14 @@ class SelectCategory extends StatefulWidget {
 }
 
 class _SelectCategoryState extends State<SelectCategory> {
-   String pickedCategory=' Pick Category';
-   List<String> _category=['Computer and Multimedia','Vehicle','Immovable','Home and Garden','Real Estate','Employment and Dervices','Clothing Wellbieng','Leisure','Companies'];
-    List<String> _categoryAndSubcategories=['Computer and Multimedia','Phones','Image and Sound','Laptop','Video games','Desktops','Computer Accesories','Camera','Tablet','Television',
-
-    'Vehicle','Cars','Motorcycles','Vehicle Parts','Boats','Bikes','Proffesional Vehicles',
-    'Immovable','ApartMents','Houses and Villas','Holiday Rents','Offices','Stores and Business','Land and Farms','Roomates',
-    'Home and Garden','Appliances and Tableware','Furniture and Decoration','Garden and tools',
-
-    
-    'Employment and Services','Jobs','Job Applications','Services','Courses and Training','Call Center','HouseKeepers and Drivers','House Work','Frames','Internship'
-    'Clothing Wellbeing','For Children','Clothing','Bags','Beauty','Equipment for babies','Shoes','Watches and Jewels',
-    'Leisure','Sports and Leisure','Animals','Movies Books Magazines','Travel and Tickets','Art','Musical Instruments',
-    'Companies','Professional Equipment','Business and Commercial','Stock and Wholesale'];
+   
 
       String radioItem = '';
 
   @override
   Widget build(BuildContext context) {
+     return Consumer<AdItemNotifier>(
+              builder: (context, adlistNotifier, anything) {
     return Scaffold(
        appBar: AppBar(title: Text('Pick Category',style: TextStyle(color: Colors.black,fontFamily: 'Ptsans'),),
       backgroundColor: Colors.grey[100],
@@ -52,7 +44,7 @@ Padding(
 
 Padding(
   padding: const EdgeInsets.all(8.0),
-  child:   dropDownButton(),
+  child:   dropDownButton(adlistNotifier),
 ),
 
 Padding(
@@ -60,20 +52,17 @@ Padding(
   child:   Text('Type of transaction'),
 ),
 
- Row(
-                         children: <Widget>[
+ Row( children: <Widget>[
                            Expanded(child: radioTile('bulsjit')),
                             Expanded(child: radioTile('vente')),
                          ],
                        ),
-                 
-
-       
 
         ],),
       ),),
       
     );
+      });
   }
 
   Widget radioTile(String value){
@@ -98,16 +87,17 @@ return RadioListTile(
             child: FlatButton(
             color: Colors.blue[700],child: Text('Contimue',
             style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),onPressed: (){
- Navigator.push(
-                              context,
+             
+ Navigator.push(   context,
                                MaterialPageRoute(
-                               builder: (context) => ItemDetailForm(category: pickedCategory,listOfImages: widget.listOfImages,),
+                               builder: (context) => ItemDetailForm(category: Provider.of<AdItemNotifier>(context, listen: false).pickedCategory,
+                               listOfImages: widget.listOfImages,),
                                ));
           },),),
         );
   }
 
-  Widget dropDownButton(){
+  Widget dropDownButton(var notifier){
     return Center(
                 child: Container(width: 300,
                   decoration: BoxDecoration(
@@ -115,7 +105,6 @@ return RadioListTile(
                       borderRadius: BorderRadius.all(
         Radius.circular(5.0) //      
     ),
-  
   ),
                   child: 
                   DropdownButton<String>(
@@ -129,13 +118,13 @@ return RadioListTile(
                       ),
                          hint:Padding(
                            padding: const EdgeInsets.only(left:8.0),
-                           child: Text(pickedCategory),
+                           child: Text(notifier.pickedCategory),
                          ),
-            items: _categoryAndSubcategories.map((String pickVal) {
+            items: SearchWidgetValues().frenchCategoryandSubs.map((String pickVal) {
              
                   return  DropdownMenuItem(
                     value: pickVal,
-                    child: _category.contains(pickVal) ? 
+                    child: SearchWidgetValues().frenchCategory.contains(pickVal) ? 
                     Column(
                       children: <Widget>[
                         Text(pickVal.toUpperCase(),style: TextStyle(color: Colors.grey[600],fontFamily: 'Ptsans',fontSize: 15),),
@@ -146,9 +135,7 @@ return RadioListTile(
                   );
             }).toList(),
             onChanged: (val) {
-                  setState(() {
-                    pickedCategory=val;
-                  });
+                    Provider.of<AdItemNotifier>(context, listen: false).setCategory(val);
             },
           ),
                 ),

@@ -1,10 +1,9 @@
 
-
 import 'dart:io';
-
-import 'package:avito/screens/NavPage.dart';
+import 'package:avito/addSellItem/fillItemWidgets.dart';
+import 'package:avito/sellListProvider/AdItemListNotifier.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 class ItemDetailForm extends StatefulWidget {
   List<File> listOfImages;
   String category;
@@ -17,36 +16,46 @@ class ItemDetailForm extends StatefulWidget {
 class _ItemDetailFormState extends State<ItemDetailForm> {
 
     final _formKey = GlobalKey<FormState>();
-String pickedLocation='Pick a location';
+
     String title='';
   String description='';
   String price='';
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<AdItemNotifier>(
+              builder: (context, adlistNotifier, anything) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true,title: Text('Item Details',style: TextStyle(fontFamily: 'Ptsans',color: Colors.grey[600]),),backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
+      appBar: AppBar(centerTitle: true,
+      title: Text('Item Details',style: TextStyle(fontFamily: 'Ptsans',color: Colors.grey[600]),),backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
         Navigator.pop(context);
       },),),
       backgroundColor: Colors.grey[200],
        bottomNavigationBar: BottomAppBar(
     color: Colors.white,
-  
     child: _bottomButton(),
     elevation: 0,
   ),
       body: Center(child: Container(child: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(7.0),
         child: ListView(children: <Widget>[
 
-
-
              Padding(
-               padding: const EdgeInsets.all(12.0),
+               padding: const EdgeInsets.only(left:14.0,right: 14.0,top: 2,bottom: 2),
                child: Form(
             key: _formKey,
             child: Column(children: [
-             dropDownButton(),
+             dropDownLocation(context),
+          adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+             adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? optionalDropDown('Marque',adlistNotifier) : Container(),
+           adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+
+                          adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? optionalDropDown('Carburant',adlistNotifier) : Container(),
+                       adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+
+             adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? dropDownPuissance(adlistNotifier) : Container(),
+
+             ///./////////////////////////////////////
              SizedBox(   height:MediaQuery.of(context).size.height*0.03,),
               Container(decoration: BoxDecoration(color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(8)),),
@@ -70,7 +79,6 @@ String pickedLocation='Pick a location';
                 child: TextFormField(
                 
                 maxLines: 3,
-                  
                   validator: (val)=> val.length<10 ? 'Description Should Be Longer' : null,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -100,64 +108,16 @@ String pickedLocation='Pick a location';
               ),
               SizedBox(   height:MediaQuery.of(context).size.height*0.03,),
          
-     
-      
             ]),
           ),
              ),
-       
-
-       
-
           
           ],),
       ),),),
     );
+    });
   }
-  Widget dropDownButton(){
-    return Center(
-                child: Container(width: 300,
-                  decoration: BoxDecoration(
-                     color: Colors.white,
-                      borderRadius: BorderRadius.all(
-        Radius.circular(5.0) //      
-    ),
-    border: Border.all(color: Colors.grey),
-  ),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      DropdownButton<String>(
-                        
-                         underline: SizedBox(),
-                      icon: Row(
-                        children: <Widget>[
-                          SizedBox(width: 170,),
-                          Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
-                        ],
-                      ),
-                             hint:Padding(
-                               padding: const EdgeInsets.only(left:8.0),
-                               child: Text(pickedLocation),
-                             ),
-            items: <String>['Ahgsdgh', 'Bsdfghsfgh', 'Cghsfsgh', 'Dfgghdfgh'].map((String pickVal) {
-             
-                      return  DropdownMenuItem<String>(
-                        value: pickVal,
-                        child:  Text(pickVal),
-                      );
-            }).toList(),
-            onChanged: (val) {
-                      setState(() {
-                        pickedLocation=val;
-                      });
-            },
-          ),
-         
-                    ],
-                  ),
-                ),
-              );
-  }
+  
    Widget _bottomButton(){
     return Padding(
       padding: const EdgeInsets.all(18.0),
@@ -168,12 +128,6 @@ String pickedLocation='Pick a location';
                   color: Colors.blue[600],child: Text('CONTINUE',
                   style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
                   onPressed: (){
-               if(_formKey.currentState.validate()){
-                    print([title,pickedLocation,widget.category,widget.listOfImages,price]);
-              }
-            // Navigator.push(
-            //   context,
-            //    MaterialPageRoute(builder: (context) => NavPage(),//    ));
             },),),
     );
   }

@@ -12,7 +12,7 @@ List<String> frenchCategory=["Ordinateur et multimédia", 'Véhicule','Immeuble'
     'Bien être vestimentaire', 'Pour les enfants', 'Vêtements', 'Sacs','Beauté', 'Équipement pour bébés', 'Chaussures', 'Montres et bijoux',
     'Loisirs', 'Sports et loisirs', 'Animaux', 'Films, Livres Magazines', 'Voyages et billets', 'Art', 'Instruments de musique',
     'Entreprises', 'Équipement professionnel', 'Entreprise et commercial', 'Stock et commerce de gros',
-    'Autres','Autres',
+    'Autres','autres',
     ];
 
     List<String> carBrands=[
@@ -40,16 +40,200 @@ List<String> yearMin=['2018', '2017', '2016', '2015', '2014', '2013', '2012', '2
 List<String> yearMax=['2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002', '2001', '2000', '1999', '1998', '1997', '1996', '1995', '1994', '1993', '1992', '1991', '1990', '1989', '1988', '1987', '1986', '1985', '1984', '1983', '1982', '1981', '1980'];
 List<String> puissanceList=['4 CV', '5 CV', '6 CV', '7 CV', '8 CV', '9 CV', '10 CV', '11 CV', '12 CV', '13 CV', '14 CV', '15 CV', '16 CV', '17 CV', '18 CV', '19 CV', '20 CV', '21 CV', '22 CV', '23 CV', '24 CV', '25 CV', '26 CV', '27 CV', '28 CV', '29 CV', '30 CV', '31 CV', '32 CV', '33 CV', '34 CV', '35 CV', '36 CV', '37 CV', '38 CV', '39 CV', '40 CV'];
 
-
-
+List<String> surfaceMin=['0','25','35','50','60','70','80','90','100','125','150','175','200'];
+List<String> surfaceMax=['0','25','35','50','60','70','80','90','100','125','150','175','200'];
+List<String> piecesMin=['1','2','3','4','5','6','7','8','9','10','10+'];
+List<String> piecesMax=['1','2','3','4','5','6','7','8','9','10','10+'];
     }
 
 BoxDecoration boxdecoration(){
-    return BoxDecoration(
-                     color: Colors.white,
-                      borderRadius: BorderRadius.all(
-        Radius.circular(5.0) //      
-    ),
-    border: Border.all(color: Colors.grey),
+    return BoxDecoration( color: Colors.white, borderRadius: BorderRadius.all(  Radius.circular(5.0) //      
+    ),border: Border.all(color: Colors.lightBlue),
   );
   }
+
+  class SearchNotifier extends ChangeNotifier {
+String marqueValue='Marque';
+  String carburantValue='Carburant';
+  String puissanceValue='Puissance Fiscale';
+  String _kmMinValue='min';
+String _kmMaxValue='max';
+ String _yrMinValue='min';
+ String _yrMaxValue='max';
+
+ changeyrMinVal(String val){
+    _yrMinValue= val;
+   notifyListeners();
+ }
+ changeyrMaxVal(String val){
+   _yrMaxValue = val;
+   notifyListeners();
+ }
+ changekmMinVal(String val){
+    _kmMinValue= val;
+   notifyListeners();
+ }
+ changekmMaxVal(String val){
+    _kmMaxValue= val;
+   notifyListeners();
+ }
+
+ changeMarqueVal(String marqVal){
+marqueValue=marqVal;
+notifyListeners();
+ }
+
+ changecarburantVal(String carbur){
+carburantValue=carbur;
+notifyListeners();
+ }
+
+ changePussanceVal(String val){
+puissanceValue=val;
+   notifyListeners();
+ }
+
+ 
+  }
+
+   Widget optionalDropDown(String id,var notifier){
+    return Center(
+      child: Container(width: 300,
+                  decoration:boxdecoration(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: DropdownButton<String>(
+                     
+                       style: TextStyle(color: Colors.black),
+                       underline: SizedBox(),
+                    icon: Icon(Icons.keyboard_arrow_down,size: 0,),
+                           hint:id=='Marque' ? Text(notifier.marqueValue) : Text(notifier.carburantValue),
+            items: id=='Marque' ? SearchWidgetValues().carBrands.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      
+                      value: pickVal,
+                      child:  Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Text(pickVal,
+                        style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),
+                      ),);
+            }).toList()
+            :
+SearchWidgetValues().carburant.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      value: pickVal,
+                      child:  Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
+            }).toList(),
+
+            onChanged: (val) {
+              if (id=='Marque') {
+                 notifier.changeMarqueVal(val);
+              } else {
+                notifier.changecarburantVal(val);
+                    } }, ),
+                  ),  ),  );
+  }
+
+  Widget dropDownPuissance(SearchNotifier notifier){
+    return Center(child: Container(width: 300,
+                  decoration: boxdecoration(),
+                  child: Center(
+                    child: DropdownButton<String>(
+                       style: TextStyle(color: Colors.black),
+                       underline: SizedBox(),
+                    icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                           hint: Text(notifier.puissanceValue),
+            items: SearchWidgetValues().puissanceList.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      value: pickVal,
+                      child: Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
+            }).toList(),
+            onChanged: (val) {
+            notifier.changePussanceVal(val);
+              }, ),
+                  ),  ),  );
+  }
+
+  Widget optionalRowDropForCars(String id,SearchNotifier notifier){
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: <Widget>[
+Container(width: 140,
+                  decoration: boxdecoration(),
+                  child: Center(
+                    child: DropdownButton<String>(
+                       style: TextStyle(color: Colors.black),
+                       underline: SizedBox(),
+                    icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                    hint:id=='km' ? Text(notifier._kmMinValue) : Text(notifier._yrMinValue),
+            items: id=='km' ? SearchWidgetValues().kmmin.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      value: pickVal,
+                      child:  Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 12),),);
+            }).toList()
+            :
+SearchWidgetValues().yearMin.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      value: pickVal,
+                      child:  Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
+            }).toList(),
+
+            onChanged: (val) {
+              if (id=='km') {
+                notifier.changekmMinVal(val);
+              } else {
+                  notifier.changeyrMinVal(val);
+                    } }, ),
+                  ),  ),
+
+                      //============
+
+                      Container(width: 140,
+                  decoration: boxdecoration(),
+                  child: Center(
+                    child: DropdownButton<String>(
+                       style: TextStyle(color: Colors.black),
+                       underline: SizedBox(),
+                    icon: Row(
+                      children: <Widget>[
+                        Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                      ],
+                    ),
+                           hint:id=='km' ? Text(notifier._kmMaxValue) : Text(notifier._yrMaxValue),
+            items: id=='km' ? SearchWidgetValues().kmmax.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      value: pickVal,
+                      child:  Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
+            }).toList()
+            :
+SearchWidgetValues().yearMax.map((String pickVal) {
+              
+                    return  DropdownMenuItem<String>(
+                      value: pickVal,
+                      child:  Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
+            }).toList(),
+
+            onChanged: (val) {
+              if (id=='km') {
+                notifier.changekmMaxVal(val);                           
+              } else {
+               notifier.changeyrMaxVal(val);
+               } }, ),
+                  ),  ),
+                  ],);
+  }
+
+
+
+

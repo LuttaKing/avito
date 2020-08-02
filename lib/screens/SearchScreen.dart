@@ -1,5 +1,4 @@
-import 'package:avito/screens/NavPage.dart';
-import 'package:avito/screens/bottomBarScreens/Account.dart';
+import 'package:provider/provider.dart';
 import 'package:avito/searchWidgets.dart';
 import 'package:flutter/material.dart';
 
@@ -10,29 +9,27 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
       String radioItem = '';
-
   String searchValue='';
+
   String dropDownCategoryValue=' Select Category';
   String dropDownLocationValue=' Pick Location';
   String minimumPrice='';
   String maximumPrice='';
-  String marqueValue='Marque';
-  String carburantValue='Carburant';
-  String puissanceValue='Puissance Fiscale';
-  String _kmMinValue='min';
-String _kmMaxValue='max';
- String _yrMinValue='min';
-String _yrMaxValue='max';
- 
+
+String _surfaceMaxValue='max';
+String _surfaceMinValue='min';
+String _pieceMaxValue='max';
+ String _pieceMinValue='min';
 
   @override
   Widget build(BuildContext context) {
+     return Consumer<SearchNotifier>(
+              builder: (context, searchNotifier, anything) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white,
        leading: IconButton(icon: Icon(Icons.close,color: Colors.black,),onPressed: (){Navigator.pop(context);},),
       title: Text('Filter Search',style: TextStyle(fontFamily: 'Ptsans',color: Colors.black),),
-      centerTitle: true,
-      elevation: 0,
+      centerTitle: true,elevation: 0,
       bottom:  PreferredSize(
             preferredSize: Size.fromHeight(58.0) ,
             child: Container(
@@ -75,47 +72,53 @@ String _yrMaxValue='max';
      
                        Row(mainAxisAlignment: MainAxisAlignment.center,
                          children: <Widget>[
-                           Expanded(child: radioTile('bulsjit')),
-                            Expanded(child: radioTile('vente')),
+                           Expanded(child: radioTile('Vente')),
+                            Expanded(child: radioTile('Demande')),
                          ],
                        ),
-dropDownCategoryValue == 'Voitures' ?  topText('Marque'): Container(),
-                       dropDownCategoryValue == 'Voitures' ? _optionalDropDown('Marque') : Container(),
+dropDownCategoryValue == 'Voitures'  ?  topText('Marque'): Container(),
+                    dropDownCategoryValue == 'Voitures' ? optionalDropDown('Marque',searchNotifier) : Container(),
         dropDownCategoryValue == 'Voitures' ?  topText('Carburant'): Container(),
-                 dropDownCategoryValue == 'Voitures' ? _optionalDropDown('Carburant') : Container(),
-dropDownCategoryValue == 'Voitures' ?  topText('KM'): Container(),
-                 dropDownCategoryValue == 'Voitures' ? _rowDropDown('km'):Container(),
-dropDownCategoryValue == 'Voitures' ?  topText('Year'): Container(),
-                 dropDownCategoryValue == 'Voitures' ? _rowDropDown('year'):Container(),
+              dropDownCategoryValue == 'Voitures' ? optionalDropDown('Carburant',searchNotifier) : Container(),
+dropDownCategoryValue == 'Voitures' || dropDownCategoryValue == 'Motos' ?  topText('KM'): Container(),
+                 dropDownCategoryValue == 'Voitures' || dropDownCategoryValue == 'Motos'? optionalRowDropForCars('km',searchNotifier):Container(),
+dropDownCategoryValue == 'Voitures' || dropDownCategoryValue == 'Motos' ?  topText('Year'): Container(),
+                 dropDownCategoryValue == 'Voitures' || dropDownCategoryValue == 'Motos'? optionalRowDropForCars('year',searchNotifier):Container(),
+////HOUSES               HOUSES
+dropDownCategoryValue == 'Appartements' || dropDownCategoryValue == 'Maisons et Villas' || dropDownCategoryValue == 'Locations Vacances' || dropDownCategoryValue == 'Bureaux' || dropDownCategoryValue == 'Commerces et Affaires'|| dropDownCategoryValue == 'Colocataires' ?  topText('Surface'): Container(),
+dropDownCategoryValue == 'Appartements' || dropDownCategoryValue == 'Maisons et Villas' || dropDownCategoryValue == 'Locations Vacances' || dropDownCategoryValue == 'Bureaux' || dropDownCategoryValue == 'Commerces et Affaires'|| dropDownCategoryValue == 'Colocataires' ? _optionalRowDropForHouses('surface'):Container(),
+dropDownCategoryValue == 'Appartements' || dropDownCategoryValue == 'Maisons et Villas' || dropDownCategoryValue == 'Locations Vacances' || dropDownCategoryValue == 'Bureaux'  ?  topText('Pieces'): Container(),
+dropDownCategoryValue == 'Appartements' || dropDownCategoryValue == 'Maisons et Villas' || dropDownCategoryValue == 'Locations Vacances' || dropDownCategoryValue == 'Bureaux'  ? _optionalRowDropForHouses('pieces'):Container(),
+
 dropDownCategoryValue == 'Voitures' ?  topText('Puissance'): Container(),
-                 dropDownCategoryValue == 'Voitures' ? dropDownPuissance():Container(),
+dropDownCategoryValue == 'Voitures' ? dropDownPuissance(searchNotifier):Container(),
 
       topText('Price'),
 
-      Row(mainAxisAlignment: MainAxisAlignment.center,
+      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
          priceTextField('Min'),
-         SizedBox(width: 20,),
-                  priceTextField('Max'),
-
-      ],),
+         priceTextField('Max'),
+ ],),
         ],),
           ),
         ),
     );
+     });
   }
   Widget topText(String text){
     return Padding(
         padding: const EdgeInsets.only(left:8.0,top:4,bottom: 4),
-        child: Text(text,style: TextStyle(fontFamily: 'New',color: Colors.blue,fontWeight: FontWeight.bold),),
+        child: Text(text,style: TextStyle(fontFamily: 'New',color: Colors.blueGrey,),),
       );
   }
 
    Widget radioTile(String value){
 return RadioListTile(
+  dense: true,
   activeColor: Colors.blue,
               groupValue: radioItem,
-              title: Text(value),
+              title: Text(value,style: TextStyle(fontSize: 15),),
               value: value,
               onChanged: (val) {
                 setState(() {
@@ -127,11 +130,9 @@ return RadioListTile(
   Widget priceTextField(String hintText){
     return Container(
                  color: Colors.white,
-                 width: 120,
-                 height: 50,
+                 width: 140,height: 50,
                  child: TextField( 
-                   
-                   keyboardType:TextInputType.number,
+                 keyboardType:TextInputType.number,
                     onChanged: (text) {
                        if (hintText=='Min') {
                          minimumPrice=text;
@@ -139,9 +140,9 @@ return RadioListTile(
                          maximumPrice=text;
                        }
                       },
-                     // style: TextStyle(color: Colors.red, fontWeight: FontWeight.w300),
                      decoration: InputDecoration(
                       hintText: hintText,
+                      hintStyle: TextStyle(fontSize: 15),
                               border: OutlineInputBorder()
                             ),
                       ),
@@ -152,25 +153,31 @@ return RadioListTile(
     return Center(child: Container(width: 300,
                   decoration: boxdecoration(),
                   child: DropdownButton<String>(
+                  
+                   style: TextStyle(color: Colors.black),
                      underline: SizedBox(),
                   icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
                          hint:id=='category' ? Text(dropDownCategoryValue) : Text(dropDownLocationValue),
             items: SearchWidgetValues().frenchCategoryandSubs.map((String pickVal) {
-              
                   return  DropdownMenuItem<String>(
+                    
                     value: pickVal,
                     child:  SearchWidgetValues().frenchCategory.contains(pickVal) ? 
                     Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                    
                     Container(color: Colors.orange,child: Padding(
-                      padding: const EdgeInsets.only(top:2.0,bottom: 2.0,left: 22,right: 20),
+                      padding:  EdgeInsets.only(top:2.0,bottom: 2.0,left: 22,right: 20),
                       child: Text(pickVal.toUpperCase(),style: TextStyle(color: Colors.white,fontFamily: 'Fred',fontSize: 15),),
                     )),
                   ],
                     )
-                    :Text(pickVal,
-                    style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
+                    :Padding(
+                      padding:  EdgeInsets.all(0.0),
+                      
+                      child: Text(pickVal,
+                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),
+                    ),);
             }).toList(),
             onChanged: (val) {
               if (id=='category') {
@@ -183,71 +190,19 @@ return RadioListTile(
                   }); } }, ),  ),  );
   }
 
-  Widget _optionalDropDown(String id){
-    return Center(
-      child: Container(width: 300,
-                  decoration:boxdecoration(),
-                  child: DropdownButton<String>(
-                     underline: SizedBox(),
-                  icon: Icon(Icons.keyboard_arrow_down,size: 0,),
-                         hint:id=='Marque' ? Text(marqueValue) : Text(carburantValue),
-            items: id=='Marque' ? SearchWidgetValues().carBrands.map((String pickVal) {
-              
-                  return  DropdownMenuItem<String>(
-                    value: pickVal,
-                    child:  Text(pickVal,
-                    style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
-            }).toList()
-            :
-SearchWidgetValues().carburant.map((String pickVal) {
-              
-                  return  DropdownMenuItem<String>(
-                    value: pickVal,
-                    child:  Text(pickVal,
-                    style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
-            }).toList(),
 
-            onChanged: (val) {
-              if (id=='Marque') {
-                 setState(() {
-                    marqueValue=val;
-                  });
-              } else {
-                setState(() {
-                    carburantValue=val;
-                  
-                  }); } }, ),  ),  );
-  }
-Widget dropDownPuissance(){
-    return Center(child: Container(width: 300,
-                  decoration: boxdecoration(),
-                  child: Center(
-                    child: DropdownButton<String>(
-                       underline: SizedBox(),
-                    icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
-                           hint: Text(puissanceValue),
-            items: SearchWidgetValues().puissanceList.map((String pickVal) {
-              
-                    return  DropdownMenuItem<String>(
-                      value: pickVal,
-                      child: Text(pickVal,
-                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
-            }).toList(),
-            onChanged: (val) {
-            setState(() => puissanceValue=val );
-              }, ),
-                  ),  ),  );
-  }
-  Widget _rowDropDown(String id){
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: <Widget>[
+  Widget _optionalRowDropForHouses(String id){
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: <Widget>[
 Container(width: 140,
                   decoration: boxdecoration(),
                   child: Center(
                     child: DropdownButton<String>(
+                       style: TextStyle(color: Colors.black),
                        underline: SizedBox(),
                     icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
-                    hint:id=='km' ? Text(_kmMinValue) : Text(_yrMinValue),
-            items: id=='km' ? SearchWidgetValues().kmmin.map((String pickVal) {
+                    hint:id=='surface' ? Text(_surfaceMinValue) : Text(_pieceMinValue),
+            items: id=='surface' ? SearchWidgetValues().surfaceMin.map((String pickVal) {
               
                     return  DropdownMenuItem<String>(
                       value: pickVal,
@@ -255,7 +210,7 @@ Container(width: 140,
                       style: TextStyle(fontFamily: 'Ptsans',fontSize: 12),),);
             }).toList()
             :
-SearchWidgetValues().yearMin.map((String pickVal) {
+SearchWidgetValues().piecesMin.map((String pickVal) {
               
                     return  DropdownMenuItem<String>(
                       value: pickVal,
@@ -264,10 +219,10 @@ SearchWidgetValues().yearMin.map((String pickVal) {
             }).toList(),
 
             onChanged: (val) {
-              if (id=='km') {
-                setState(() => _kmMinValue=val );
+              if (id=='surface') {
+                setState(() => _surfaceMinValue=val );
               } else {
-                                setState(() => _yrMinValue=val );
+                                setState(() => _pieceMinValue=val );
                     } }, ),
                   ),  ),
 
@@ -277,14 +232,15 @@ SearchWidgetValues().yearMin.map((String pickVal) {
                   decoration: boxdecoration(),
                   child: Center(
                     child: DropdownButton<String>(
+                       style: TextStyle(color: Colors.black),
                        underline: SizedBox(),
                     icon: Row(
                       children: <Widget>[
                         Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
                       ],
                     ),
-                           hint:id=='km' ? Text(_kmMaxValue) : Text(_yrMaxValue),
-            items: id=='km' ? SearchWidgetValues().kmmax.map((String pickVal) {
+                           hint:id=='surface' ? Text(_surfaceMaxValue) : Text(_pieceMaxValue),
+            items: id=='surface' ? SearchWidgetValues().surfaceMax.map((String pickVal) {
               
                     return  DropdownMenuItem<String>(
                       value: pickVal,
@@ -292,7 +248,7 @@ SearchWidgetValues().yearMin.map((String pickVal) {
                       style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
             }).toList()
             :
-SearchWidgetValues().yearMax.map((String pickVal) {
+SearchWidgetValues().piecesMax.map((String pickVal) {
               
                     return  DropdownMenuItem<String>(
                       value: pickVal,
@@ -301,16 +257,16 @@ SearchWidgetValues().yearMax.map((String pickVal) {
             }).toList(),
 
             onChanged: (val) {
-              if (id=='km') {
-                                               
+              if (id=='surface') {
+                       setState(() =>  _surfaceMaxValue=val );                        
               } else {
-                 setState(() =>  _yrMaxValue=val );
+                 setState(() =>  _pieceMaxValue=val );
                } }, ),
                   ),  ),
-                      
-
-    ],);
+                  ],);
   }
+
+
   Widget _bottomButton(){
     return Padding(
       padding:  EdgeInsets.all(18.0),
