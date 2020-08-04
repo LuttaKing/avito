@@ -98,7 +98,7 @@ class _NavPageState extends State<NavPage> {
           },
           label: Text('Sell',style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
           icon: Icon(Icons.photo_camera,color: Colors.white,),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
+        ), 
       ),
     );
   }
@@ -107,7 +107,7 @@ class _NavPageState extends State<NavPage> {
     return BottomNavigationBar(
        
       items: <BottomNavigationBarItem>[
-        bottomBarItem(Icon(Icons.home), 'Shop'),
+        bottomBarItem(Icon(Icons.home),'Shop'),
         bottomBarItem(Icon(Icons.person_outline), 'Account'),
         bottomBarItem(Icon(MdiIcons.chatOutline), 'Chat'),
         bottomBarItem(Icon(Icons.notifications_active), 'Notification'),
@@ -124,7 +124,7 @@ class _NavPageState extends State<NavPage> {
   BottomNavigationBarItem bottomBarItem(Icon icon, String text) {
     
     return BottomNavigationBarItem(icon: icon, 
-    title: Text(text,style: TextStyle(fontFamily: 'New'),));
+    title: Text(text,style: TextStyle(fontFamily: 'Lutta'),));
   }
 
   

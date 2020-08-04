@@ -1,4 +1,5 @@
 import 'package:avito/AuthFolder/Login.dart';
+import 'package:avito/AuthFolder/Profile.dart';
 import 'package:avito/screens/NavPage.dart';
 import 'package:flutter/material.dart';
 
@@ -21,10 +22,9 @@ import 'package:url_launcher/url_launcher.dart';
   }
 
   goToAccountTab(BuildContext context){
-    Navigator.push(
-                                context,
+    Navigator.push(context,
                                  MaterialPageRoute(
-                                 builder: (context) => NavPage(pageIndex: 1,),
+                                 builder: (context) => ProfilePage(),
                                  ));
   }
 

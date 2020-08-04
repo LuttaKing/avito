@@ -46,16 +46,41 @@ class _ItemDetailFormState extends State<ItemDetailForm> {
             key: _formKey,
             child: Column(children: [
              dropDownLocation(context),
-          adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
-             adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? optionalDropDown('Marque',adlistNotifier) : Container(),
-           adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+cars1bool(adlistNotifier) ? box(context) : Container(),
+cars1bool(adlistNotifier) ? optionalDropDown('Marque',adlistNotifier) : Container(),
+cars1bool(adlistNotifier) ? box(context) : Container(),
+cars1bool(adlistNotifier)  ? optionalDropDown('Carburant',adlistNotifier) : Container(),
+cars1bool(adlistNotifier)  ? box(context) : Container(),
+cars1bool(adlistNotifier)  ? dropDownPuissance(adlistNotifier) : Container(),
+cars1bool(adlistNotifier)  ? box(context) : Container(),
+cars1bool(adlistNotifier)  ? dropForKMorYear('km',adlistNotifier) : Container(),
+cars1bool(adlistNotifier)  ? box(context) : Container(),
+cars1bool(adlistNotifier)  ? dropForKMorYear('yr',adlistNotifier) : Container(),
+cars1bool(adlistNotifier)  ? box(context) : Container(),
+cars1bool(adlistNotifier)  ? dropForOriginVitesse('origin',adlistNotifier): Container(),
+adlistNotifier.pickedCategory=='Voitures' ? box(context) : Container(),
+adlistNotifier.pickedCategory=='Voitures' ? dropForOriginVitesse('vitesse',adlistNotifier): Container(),
+adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+adlistNotifier.pickedCategory=='Motos' ? cylinderAndNumberTextField('cylinder',adlistNotifier) : Container(),
+adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+adlistNotifier.pickedCategory=='Motos' ? cylinderAndNumberTextField('nombre',adlistNotifier) : Container(),
 
-                          adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? optionalDropDown('Carburant',adlistNotifier) : Container(),
-                       adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? box(context) : Container(),
+//////////////////////////////////////////////////////////
+ housesBool1(adlistNotifier) ? box(context) : Container(),
+ housesBool1(adlistNotifier) ? addressTextField('Address',adlistNotifier): Container(),
+housesBool1(adlistNotifier) ? box(context) : Container(),
+ housesBool1(adlistNotifier) ? dropChambressandSalle('Chambres',adlistNotifier): Container(),
+ housesBool1(adlistNotifier) ? box(context) : Container(),
+ housesBool1(adlistNotifier) ? dropChambressandSalle('Sale de Bain',adlistNotifier): Container(),
+housesBool1(adlistNotifier) ? box(context) : Container(),
+ housesBool1(adlistNotifier) ? dropChambressandSalle('Salons',adlistNotifier): Container(),
+ housesBool1(adlistNotifier) ? box(context) : Container(),
+ housesBool1(adlistNotifier) ? dropChambressandSalle('Etage',adlistNotifier): Container(),
 
-             adlistNotifier.pickedCategory=='Voitures' ||  adlistNotifier.pickedCategory=='Motos' ? dropDownPuissance(adlistNotifier) : Container(),
+ housesBool1(adlistNotifier) ? box(context) : Container(),
+ housesBool1(adlistNotifier) ? addressTextField('Surface Totale',adlistNotifier): Container(),
 
-             ///./////////////////////////////////////
+
              SizedBox(   height:MediaQuery.of(context).size.height*0.03,),
               Container(decoration: BoxDecoration(color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(8)),),
@@ -116,6 +141,23 @@ class _ItemDetailFormState extends State<ItemDetailForm> {
       ),),),
     );
     });
+  }
+
+  bool cars1bool(var notifier){
+    if (notifier.pickedCategory=='Voitures' ||  notifier.pickedCategory=='Motos' ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool housesBool1(var notifier){
+    
+    if (notifier.pickedCategory=='Appartements' ||  notifier.pickedCategory=='Maisons et Villas' ||  notifier.pickedCategory=='Locations Vacances'||  notifier.pickedCategory=='Bureaux'||  notifier.pickedCategory=='Commerces et Affaires' ) {
+      return true;
+    } else {
+      return false;
+    }
   }
   
    Widget _bottomButton(){

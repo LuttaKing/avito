@@ -82,7 +82,7 @@ _drawerHeader(),
             onTap: () {
               if (title=='Account') {
                 Navigator.pop(context);
-                goToLoginPage(context);
+                goToAccountTab(context);
                
               } else if(title=='Chat'){
                goToChatTab(context);

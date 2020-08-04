@@ -64,4 +64,7 @@ flutter:
      - family: New
        fonts:
          - asset: font/icomoon.ttf
+     - family: Lutta
+       fonts:
+         - asset: font/Lutta.ttf
 

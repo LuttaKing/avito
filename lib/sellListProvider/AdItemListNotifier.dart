@@ -1,11 +1,10 @@
-import 'package:avito/searchWidgets.dart';
+
 import 'package:avito/sellListProvider/AdItemModel.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 class AdItemNotifier extends ChangeNotifier {
   List<AdItemModel> _adList = [];
-
 
   addItemtoList(String category, String title, String description, String price,String location, List<File> imageList) {
     AdItemModel _adItem = AdItemModel(
@@ -35,6 +34,15 @@ notifyListeners();
   String marqueValue='Marque';
   String carburantValue='Carburant';
   String puissanceValue='Puissance Fiscale';
+
+  String kmVal='Choose Km Val';
+  String originVal='Origine';
+  String yrVal='Pick Year';
+  String vitesse='Vittese';
+
+  String cylinderVal='';
+  String nombreVal='';
+
   changeMarqueVal(String marqVal){
 marqueValue=marqVal;
 notifyListeners();
@@ -50,69 +58,72 @@ puissanceValue=val;
    notifyListeners();
  }
 
+ changeKMval(String val){
+kmVal=val;
+   notifyListeners();
+ }
+
+ changeOriginval(String val){
+originVal=val;
+   notifyListeners();
+ }
+
+ changeYearval(String val){
+yrVal=val;
+   notifyListeners();
+ }
+
+ changeVitesseval(String val){
+vitesse=val;
+   notifyListeners();
+ }
+
+ changeCylinderVal(String val){
+   cylinderVal=val;
+   notifyListeners();
+ }
+
+  changeNombreVal(String val){
+   nombreVal=val;
+   notifyListeners();
+ }
+
+ ////////////////////////////////////////////////
+ String address='';
+ String chambres='Chambres';
+ String salleDeBain='SalleDeBain';
+ String salon='Salon';
+ String etage='Etage';
+
+ String surfaceTotal='';
+changeAddress(String val){
+   address=val;
+   notifyListeners();
+ }
+ changeChambres(String val){
+   chambres=val;
+   notifyListeners();
+ }
+ changeSalleDeBain(String val){
+  salleDeBain=val;
+   notifyListeners();
+ }
+ changeSalon(String val){
+   salon=val;
+   notifyListeners();
+ }
+ changeEtage(String val){
+   etage=val;
+   notifyListeners();
+ }
+ changeSurfaceTotal(String val){
+   surfaceTotal=val;
+   notifyListeners();
+ }
 
 
 
 }
- Widget optionalDropDown(String id,AdItemNotifier notifier){
-    return Center(
-      child: Container(width: 300,
-                  decoration:boxdecoration(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:8.0),
-                    child: DropdownButton<String>(
-                     
-                       style: TextStyle(color: Colors.black),
-                       underline: SizedBox(),
-                    icon: Icon(Icons.keyboard_arrow_down,size: 0,),
-                           hint:id=='Marque' ? Text(notifier.marqueValue) : Text(notifier.carburantValue),
-            items: id=='Marque' ? SearchWidgetValues().carBrands.map((String pickVal) {
-              
-                    return  DropdownMenuItem<String>(
-                      
-                      value: pickVal,
-                      child:  Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Text(pickVal,
-                        style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),
-                      ),);
-            }).toList()
-            :
-SearchWidgetValues().carburant.map((String pickVal) {
-              
-                    return  DropdownMenuItem<String>(
-                      value: pickVal,
-                      child:  Text(pickVal,
-                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
-            }).toList(),
+ 
 
-            onChanged: (val) {
-              if (id=='Marque') {
-                 notifier.changeMarqueVal(val);
-              } else {
-                notifier.changecarburantVal(val);
-                    } }, ),
-                  ),  ),  );
-  }
-
-  Widget dropDownPuissance(AdItemNotifier notifier){
-    return Center(child: Container(width: 300,
-                  decoration: boxdecoration(),
-                  child: Center(
-                    child: DropdownButton<String>(
-                       style: TextStyle(color: Colors.black),
-                       underline: SizedBox(),
-                    icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
-                           hint: Text(notifier.puissanceValue),
-            items: SearchWidgetValues().puissanceList.map((String pickVal) {
-              
-                    return  DropdownMenuItem<String>(
-                      value: pickVal,
-                      child: Text(pickVal,
-                      style: TextStyle(fontFamily: 'Ptsans',fontSize: 15),),);
-            }).toList(),
-            onChanged: (val) {
-            notifier.changePussanceVal(val);
-              }, ),
-                  ),  ),  );
-  }
+  
