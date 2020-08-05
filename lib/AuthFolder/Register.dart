@@ -16,7 +16,7 @@ String dropDownValue='Pick location';
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true,title: Text('REGISTER',
-      style: TextStyle(fontFamily: 'Ptsans',color: Colors.grey[600]),),backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
+      style: TextStyle(fontFamily: 'New',color: Colors.grey[800]),),backgroundColor: Colors.grey[200],leading:  IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
         Navigator.pop(context);
       },),),
       backgroundColor: Colors.grey[100],
@@ -144,7 +144,8 @@ String dropDownValue='Pick location';
 
               }
             },
-            child: Text('REGISTER',style: TextStyle(fontFamily: 'Ptsans',color: Colors.white),),),),
+            child: Text('REGISTER',
+            style: TextStyle(fontFamily: 'Ptsans',color: Colors.white),),),),
           ),
         ),
 
@@ -170,7 +171,7 @@ String dropDownValue='Pick location';
                       icon: Row(
                         children: <Widget>[
                           SizedBox(width: 170,),
-                          Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                          Icon(Icons.keyboard_arrow_down,color: Colors.blue,),
                         ],
                       ),
                              hint:Text(dropDownValue),

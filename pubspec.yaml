@@ -26,6 +26,7 @@ dependencies:
   share: ^0.6.4+3
   flushbar: ^1.10.4
   dotted_border: ^1.0.6
+  graphql_flutter: ^3.0.0
 
 
   cupertino_icons: ^0.1.3

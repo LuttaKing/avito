@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
                   child: Center(
                     child: Column(children: <Widget>[
- Text('Login',style: TextStyle(fontSize: 40,fontFamily: 'Ptsans'),),
+ Text('Login',style: TextStyle(fontSize: 40,fontFamily: 'New',letterSpacing: 2),),
  SizedBox(height: MediaQuery.of(context).size.height*0.037,),
             
 
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
 
                           }
                         },
-            child: Text('LOGIN',style: TextStyle(fontFamily: 'Ptsans',color: Colors.white),),),),
+            child: Text('LOGIN',style: TextStyle(fontFamily: 'New',letterSpacing: 2,color: Colors.white),),),),
                       ),
                     ),
 

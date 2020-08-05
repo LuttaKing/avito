@@ -44,7 +44,8 @@ class _AccountPageState extends State<AccountPage> {
 SizedBox(height: 30,),
       Padding(
         padding: const EdgeInsets.all(28.0),
-        child: Text('Create Ads and they will appear here',style: TextStyle(color: Colors.redAccent,fontSize: 18.5,fontFamily: 'Ptsans'),),
+        child: Text('Create Ads and they will appear here',
+        style: TextStyle(color: Colors.blueGrey,fontSize: 17,fontFamily: 'New'),),
       ),
 
        Padding(
@@ -59,9 +60,13 @@ SizedBox(height: 30,),
                                       )),
        ),
                                     SizedBox(height: 30,),
-
-                       Padding(
-      padding: const EdgeInsets.all(38.0),
+ _loginButton(),
+                                    
+    ],);}
+  }
+  Widget _loginButton(){
+    return Padding(
+      padding: const EdgeInsets.all(42.0),
       child: Container( decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(10)),
                                         color: Color(0xffb078080)
@@ -69,11 +74,10 @@ SizedBox(height: 30,),
       
         child: SizedBox(width: MediaQuery.of(context).size.width*0.7,child: FlatButton(onPressed:(){goToLoginPage();},
         
-       child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
+       child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'New',letterSpacing: 2),),
         ),),
       ),
-    ),              
-    ],);}
+    );
   }
 
   Widget secondTab(){
@@ -81,7 +85,8 @@ SizedBox(height: 30,),
 SizedBox(height: 30,),
       Padding(
         padding: const EdgeInsets.only(left:38.0,right: 38),
-        child: Text('The items your liked will appear here',style: TextStyle(color: Colors.redAccent,fontFamily:'Ptsans',fontSize: 18.5),),
+        child: Text('The items your liked will appear here',
+        style: TextStyle(color: Colors.blueGrey,fontSize: 17,fontFamily: 'New'),),
       ),
        Container(
                    height: MediaQuery.of(context).size.height*0.32,
@@ -93,21 +98,7 @@ SizedBox(height: 30,),
                                     )),
                                     SizedBox(height: 30,),
 
-                       Padding(
-      padding: const EdgeInsets.all(38.0),
-      child: Container( decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        color: Color(0xffb078080)
-                                          ),
-      
-        child: SizedBox(width: MediaQuery.of(context).size.width*0.7,child: FlatButton(onPressed: (){
-          goToLoginPage();
-        },
-        
-         child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
-        ),),
-      ),
-    ),              
+           _loginButton(),            
     ],);
   }
 
@@ -116,7 +107,8 @@ SizedBox(height: 30,),
 SizedBox(height: 30,),
       Padding(
         padding: const EdgeInsets.only(left:38.0,right: 38),
-        child: Text('You can save searches and they will appear here',style: TextStyle(color: Colors.redAccent,fontFamily: 'Ptsans',fontSize: 18.5),),
+        child: Text('You can save searches and they will appear here',
+        style: TextStyle(color: Colors.blueGrey,fontSize: 17,fontFamily: 'New'),),
       ),
 
        Container(
@@ -129,21 +121,7 @@ SizedBox(height: 30,),
                                     )),
                                     SizedBox(height: 30,),
 
-                       Padding(
-      padding: const EdgeInsets.all(38.0),
-      child: Container( decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        color: Color(0xffb078080)
-                                          ),
-      
-        child: SizedBox(width: MediaQuery.of(context).size.width*0.7,child: FlatButton(onPressed: (){
-          goToLoginPage();
-        },
-        
-        child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
-        ),),
-      ),
-    ),              
+        _loginButton(),            
     ],);
   }
 

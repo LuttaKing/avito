@@ -57,7 +57,7 @@ class _NavPageState extends State<NavPage> {
             children: <Widget>[
             FlutterLogo(colors: Colors.orange,),
             SizedBox(width: 3,),
-            Text('AVITO',style: TextStyle(color: Colors.black,fontFamily: 'New',fontWeight: FontWeight.bold),)
+            Text('AVITO',style: TextStyle(color: Colors.black,fontFamily: 'Fred'),)
           ],),
           actions: <Widget>[
              IconButton(icon: Icon(Icons.search,color: Colors.black,), onPressed: () { 
@@ -72,10 +72,9 @@ class _NavPageState extends State<NavPage> {
  bottom: widget.pageIndex == 1 ?
         TabBar(
                 tabs: [
-                  Tab(icon: Icon(Icons.filter_list,
-                  color: Colors.blue[600],)),
-                  Tab(icon: Icon(Icons.favorite_border,color: Colors.redAccent,)),
-                  Tab(icon: Icon(Icons.star_border,color: Colors.yellow,)),
+                  Tab(icon: Icon(Icons.filter_none,color: Colors.blueGrey,)),
+                  Tab(icon: Icon(Icons.favorite,color: Colors.blueGrey,)),
+                  Tab(icon: Icon(Icons.save,color: Colors.blueGrey,)),
                 ],
               )
          
@@ -96,7 +95,7 @@ class _NavPageState extends State<NavPage> {
                                  builder: (context) => SelectImages(),
                                  ));
           },
-          label: Text('Sell',style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
+          label: Text('Sell',style: TextStyle(color: Colors.white,fontFamily: 'New'),),
           icon: Icon(Icons.photo_camera,color: Colors.white,),
         ), 
       ),

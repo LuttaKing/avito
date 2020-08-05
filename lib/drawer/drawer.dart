@@ -45,11 +45,10 @@ _drawerHeader(),
                                  builder: (context) => SelectImages(),
                                  ));
         },
-        
         child: Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget>[
           Icon(Icons.photo_camera,color: Colors.white,),
           SizedBox(width: 20),
-          Text('Create Ad',style: TextStyle(color: Colors.white),),
+          Text('Create Ad',style: TextStyle(color: Colors.white,fontFamily: 'New'),),
         ],),
         ),),
       ),

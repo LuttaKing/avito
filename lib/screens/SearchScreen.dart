@@ -198,6 +198,7 @@ Container(width: 140,
                   decoration: boxdecoration(),
                   child: Center(
                     child: DropdownButton<String>(
+                      
                        style: TextStyle(color: Colors.black),
                        underline: SizedBox(),
                     icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
@@ -274,8 +275,8 @@ SearchWidgetValues().piecesMax.map((String pickVal) {
                   height:MediaQuery.of(context).size.height*0.07,
                 width: MediaQuery.of(context).size.width*0.6,
                 child: FlatButton(
-                  color: Colors.blue[700],child: Text('SEARCH',
-                  style: TextStyle(color: Colors.white,fontFamily: 'Ptsans'),),
+                  color: Colors.blue,child: Text('Search',
+                  style: TextStyle(color: Colors.white,fontFamily: 'New',letterSpacing: 2),),
                   onPressed: (){
                 Navigator.pop(context);
                 },),),
